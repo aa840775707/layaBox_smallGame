@@ -2,6 +2,7 @@
     "x":0,
     "type":"Sprite",
     "selectedBox":1,
+    "selecteID":8,
     "searchKey":"Sprite,buttle",
     "referenceLines":null,
     "props":{"y":0,"x":0,"texture":"test/c2.png","presetID":1,"preset":"laya/pages/prefab/Bullet.prefab","name":"buttle","isPresetRoot":true,"group":-2},

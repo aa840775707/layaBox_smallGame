@@ -10,7 +10,7 @@ export default class Index extends Laya.Script {
         this.btnStart.on(Laya.Event.CLICK, this, () => {
             //点击后，打开UI场景示例
             // Laya.Scene.open("uiDemo/UiMain.scene");
-            Laya.Scene.open("Game.scene");
+            Laya.Scene.open("GameView.scene");
         });
     }
 

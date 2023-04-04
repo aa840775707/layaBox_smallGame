@@ -20,6 +20,7 @@ export default class LoadingRT extends ui.LoadingUI {
             "res/atlas/role.atlas",
             "res/atlas/test.atlas",
             "files/layaAir.mp4",
+            "res/atlas/mainUi.atlas",
 
             //单独加载大图
             "bigPicture/bg_daohang_paodao.jpg",
@@ -60,8 +61,6 @@ export default class LoadingRT extends ui.LoadingUI {
         //接近完成加载时，让显示进度比实际进度慢一点，这是为打开场景时的自动加载预留，尤其是要打开的场景资源多，并没有完全放到预加载中，还需要再自动加载一部分时。
         if (progress > 0.92) this.progress.value = 0.95;
         else this.progress.value = progress;
-
-        console.log("加载进度: " + progress, this.progress.value);
     }
 
     /**

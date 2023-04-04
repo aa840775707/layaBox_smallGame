@@ -1,11 +1,29 @@
 (function () {
     'use strict';
 
+    class GameView extends Laya.Script {
+        constructor() {
+            super();
+        }
+        onEnable() {
+            this.initView();
+        }
+        onStart() {
+        }
+        initView() {
+            let bgH = this.moveBg.height;
+            let stageH = Laya.stage.height;
+            this.moveBg.y = -(bgH - stageH);
+        }
+        onDisable() {
+        }
+    }
+
     class Index extends Laya.Script {
         constructor() { super(); }
         onEnable() {
             this.btnStart.on(Laya.Event.CLICK, this, () => {
-                Laya.Scene.open("Game.scene");
+                Laya.Scene.open("GameView.scene");
             });
         }
         onDisable() {
@@ -90,6 +108,7 @@
                 "res/atlas/role.atlas",
                 "res/atlas/test.atlas",
                 "files/layaAir.mp4",
+                "res/atlas/mainUi.atlas",
                 "bigPicture/bg_daohang_paodao.jpg",
                 "bigPicture/bg_daohang_xiaoyouxi.jpg",
             ];
@@ -113,7 +132,6 @@
                 this.progress.value = 0.95;
             else
                 this.progress.value = progress;
-            console.log("加载进度: " + progress, this.progress.value);
         }
         onLoaded() {
             this.progress.value = 0.98;
@@ -204,17 +222,6 @@
         }
     }
 
-    class CloseBtn extends Laya.Script {
-        constructor() { super(); }
-        onEnable() {
-        }
-        onClick(e) {
-            Laya.Scene.open("Index.scene");
-        }
-        onDisable() {
-        }
-    }
-
     class Bullet extends Laya.Script {
         constructor() { super(); }
         onEnable() {
@@ -223,6 +230,26 @@
         }
         onTriggerEnter(other, self, contact) {
             this.owner.removeSelf();
+        }
+        onUpdate() {
+            if (this.owner.y < -10) {
+                this.owner.removeSelf();
+            }
+        }
+        onDisable() {
+            Laya.Pool.recover("bullet", this.owner);
+        }
+    }
+
+    class BulletPrefab extends Laya.Script {
+        constructor() { super(); }
+        onEnable() {
+            var rig = this.owner.getComponent(Laya.RigidBody);
+            rig.setVelocity({ x: 0, y: -10 });
+        }
+        onTriggerEnter(other, self, contact) {
+            this.owner.removeSelf();
+            console.log("子弹", other, self, contact);
         }
         onUpdate() {
             if (this.owner.y < -10) {
@@ -289,13 +316,18 @@
         }
     }
 
-    class LoopImg extends Laya.Script {
+    class MonsterPrefab extends Laya.Script {
         constructor() { super(); }
         onEnable() {
+        }
+        onTriggerEnter(other, self, contact) {
+            this.owner.removeSelf();
+            console.log("怪物", other, self, contact);
         }
         onUpdate() {
         }
         onDisable() {
+            Laya.Pool.recover("monster", this.owner);
         }
     }
 
@@ -355,19 +387,36 @@
         }
     }
 
+    class RolePrefab extends Laya.Script {
+        constructor() { super(); }
+        onEnable() {
+        }
+        onTriggerEnter(other, self, contact) {
+            this.owner.removeSelf();
+            console.log("怪物", other, self, contact);
+        }
+        onUpdate() {
+        }
+        onDisable() {
+            Laya.Pool.recover("monster", this.owner);
+        }
+    }
+
     class GameConfig {
         constructor() { }
         static init() {
             var reg = Laya.ClassUtils.regClass;
+            reg("GameView.ts", GameView);
             reg("Index.ts", Index);
             reg("LoadingRT.ts", LoadingRT);
             reg("scence/physicsDemo/PhysicsGameMainRT.ts", PhysicsGameMainRT);
-            reg("prefab/CloseBtn.ts", CloseBtn);
             reg("scence/physicsDemo/PhysicsGameMain.ts", PhysicsGameMain);
             reg("prefab/Bullet.ts", Bullet);
+            reg("prefab/BulletPrefab.ts", BulletPrefab);
             reg("prefab/DropBox.ts", DropBox);
-            reg("prefab/LoopImg.ts", LoopImg);
+            reg("prefab/MonsterPrefab.ts", MonsterPrefab);
             reg("prefab/Role.ts", Role);
+            reg("prefab/RolePrefab.ts", RolePrefab);
         }
     }
     GameConfig.width = 1334;

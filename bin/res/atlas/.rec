@@ -222,6 +222,27 @@ P 4214275A x.png
 D demo
 R 26D0D64B fcs.jpg
 R 33656E3D whs.jpg
+D mainUi
+P 71F7BEC2 btn_daohang_caokong_1.png
+P BAD41F60 btn_daohang_caokong_2.png
+P 0EBA19BC head_daohang_1.png
+P 5CA9FD4E head_daohang_1_1.png
+P B12A71EF head_daohang_2.png
+P AB1C8D22 head_daohang_2_1.png
+P 5AAFBFA3 head_daohang_3.png
+P 0E147F57 head_daohang_3_1.png
+P C181286C head_daohang_4.png
+P 3B7ACE2C head_daohang_4_1.png
+P 924C4D0E img_daohang_ball_1.png
+P 8A1334E1 img_daohang_ball_2.png
+P 39B4A0F3 img_daohang_ball_3.png
+P 9FC4B1B3 img_daohang_ball_4.png
+P 3F2944FB img_daohang_ball_5.png
+P 843A0605 img_daohang_ball_6.png
+P 357E9464 img_daohang_boss.png
+R FAD6D6D6 img_daohang_boss2.png
+P 940B3B2E img_daohang_boss2_1.png
+P C2389E6C img_daohang_boss_1.png
 D role
 P 37712F7A m1.png
 P 08CBBB6B m2.png
