@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":14,
+    "selecteID":16,
     "searchKey":"View,gameBox",
     "referenceLines":null,
     "props":{"width":750,"top":0,"sceneColor":"#000000","runtime":"scence/physicsDemo/PhysicsGameMainRT.ts","right":0,"name":"gameBox","left":0,"height":1334,"bottom":0},
@@ -22,14 +22,13 @@
             "props":{"skin":"test/block.png","right":0,"name":"ground","left":0,"height":20,"bottom":0},
             "nodeParent":1,
             "label":"ground",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":3,
             "child":[
                 {
-                    "x":30,
                     "type":"BoxCollider",
                     "switchAble":true,
                     "searchKey":"BoxCollider",
@@ -45,7 +44,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"RigidBody",
                     "switchAble":true,
                     "searchKey":"RigidBody",
@@ -115,7 +113,8 @@
                     "compId":16,
                     "child":[
                         ]
-                }]
+                }],
+            "$HIDDEN":false
         },
         {
             "x":15,

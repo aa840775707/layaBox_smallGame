@@ -14,8 +14,8 @@ import RolePrefab from "./prefab/RolePrefab"
 * 游戏初始化配置;
 */
 export default class GameConfig{
-    static width:number=1334;
-    static height:number=750;
+    static width:number=750;
+    static height:number=1334;
     static scaleMode:string="fixedwidth";
     static screenMode:string="none";
     static alignV:string="middle";

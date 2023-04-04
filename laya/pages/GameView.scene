@@ -1,36 +1,18 @@
 {
     "x":0,
-    "type":"Scene",
+    "type":"View",
     "selectedBox":2,
-    "selecteID":19,
-    "searchKey":"Scene",
-    "props":{"width":750,"sceneColor":"#000000","height":1334},
+    "searchKey":"View,gameView",
+    "props":{"width":750,"sceneColor":"#000000","runtime":"GameView.ts","name":"gameView","height":1334},
     "nodeParent":-1,
-    "maxID":20,
-    "label":"Scene",
+    "maxID":22,
+    "label":"gameView",
     "isOpen":true,
     "isDirectory":true,
     "isAniNode":true,
     "hasChild":true,
     "compId":2,
     "child":[
-        {
-            "x":15,
-            "type":"Script",
-            "switchAble":true,
-            "source":"src/GameView.ts",
-            "searchKey":"Script,GameView",
-            "removeAble":true,
-            "props":{"rolePrefab":"@Prefab:prefab/RolePrefab.prefab","rightBtn":"@node:7","moveBg":"@node:4","monsterPrefab":"@Prefab:prefab/monsterPrefab.prefab","leftBtn":"@node:6","imgBg":"@node:4","bulletPrefab":"@Prefab:prefab/bulletPrefab.prefab"},
-            "nodeParent":2,
-            "label":"GameView",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
-            "child":[
-                ]
-        },
         {
             "x":15,
             "type":"Widget",
@@ -126,7 +108,7 @@
                                 ]
                         }]
                 }],
-            "$HIDDEN":false
+            "$HIDDEN":true
         },
         {
             "x":15,
@@ -154,6 +136,20 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":7,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Sprite",
+            "searchKey":"Sprite,roleNode",
+            "props":{"var":"roleNode"},
+            "nodeParent":2,
+            "label":"roleNode",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":21,
             "child":[
                 ]
         }],

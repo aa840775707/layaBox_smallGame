@@ -1,35 +1,6 @@
 (function () {
     'use strict';
 
-    class GameView extends Laya.Script {
-        constructor() {
-            super();
-        }
-        onEnable() {
-            this.initView();
-        }
-        onStart() {
-        }
-        initView() {
-            let bgH = this.moveBg.height;
-            let stageH = Laya.stage.height;
-            this.moveBg.y = -(bgH - stageH);
-        }
-        onDisable() {
-        }
-    }
-
-    class Index extends Laya.Script {
-        constructor() { super(); }
-        onEnable() {
-            this.btnStart.on(Laya.Event.CLICK, this, () => {
-                Laya.Scene.open("GameView.scene");
-            });
-        }
-        onDisable() {
-        }
-    }
-
     var View = Laya.View;
     var REG = Laya.ClassUtils.regClass;
     var ui;
@@ -63,6 +34,15 @@
         })(ani = ui.ani || (ui.ani = {}));
     })(ui || (ui = {}));
     (function (ui) {
+        class GameViewUI extends View {
+            constructor() { super(); }
+            createChildren() {
+                super.createChildren();
+                this.loadScene("GameView");
+            }
+        }
+        ui.GameViewUI = GameViewUI;
+        REG("ui.GameViewUI", GameViewUI);
         class LoadingUI extends View {
             constructor() { super(); }
             createChildren() {
@@ -87,6 +67,32 @@
             REG("ui.physicsDemo.PhysicsGameMainUI", PhysicsGameMainUI);
         })(physicsDemo = ui.physicsDemo || (ui.physicsDemo = {}));
     })(ui || (ui = {}));
+
+    class GameView extends ui.GameViewUI {
+        constructor() {
+            super();
+        }
+        onEnable() {
+            this.initView();
+        }
+        onStart() {
+        }
+        initView() {
+        }
+        onDisable() {
+        }
+    }
+
+    class Index extends Laya.Script {
+        constructor() { super(); }
+        onEnable() {
+            this.btnStart.on(Laya.Event.CLICK, this, () => {
+                Laya.Scene.open("GameView.scene");
+            });
+        }
+        onDisable() {
+        }
+    }
 
     class LoadingRT extends ui.LoadingUI {
         onAwake() {
@@ -419,8 +425,8 @@
             reg("prefab/RolePrefab.ts", RolePrefab);
         }
     }
-    GameConfig.width = 1334;
-    GameConfig.height = 750;
+    GameConfig.width = 750;
+    GameConfig.height = 1334;
     GameConfig.scaleMode = "fixedwidth";
     GameConfig.screenMode = "none";
     GameConfig.alignV = "middle";

@@ -34,4 +34,5 @@
    <item name="uiDemo/page/OpenScene.scene" props="" ifExport="分离模式" aName="打开小窗口"/>
    <item name="uiDemo/page/OpenMainScene.scene" props="" ifExport="分离模式" aName="打开全屏场景"/>
    <item name="uiDemo/page/IframeElement.scene" props="" ifExport="分离模式" aName="嵌套网页"/>
+   <item name="GameView.scene" props="" ifExport="分离模式" aName=""/>
 </page>

@@ -30,6 +30,15 @@ export module ui.ani {
     REG("ui.ani.scaleToSmallUI",scaleToSmallUI);
 }
 export module ui {
+    export class GameViewUI extends View {
+		public roleNode:Laya.Sprite;
+        constructor(){ super()}
+        createChildren():void {
+            super.createChildren();
+            this.loadScene("GameView");
+        }
+    }
+    REG("ui.GameViewUI",GameViewUI);
     export class LoadingUI extends View {
 		public bg:Laya.Image;
 		public progress:Laya.ProgressBar;
