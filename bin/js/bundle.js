@@ -1,6 +1,114 @@
 (function () {
     'use strict';
 
+    class RolePrefab extends Laya.Script {
+        constructor() {
+            super();
+            this.rSpeed = 10;
+            this.moveDir = 0;
+        }
+        onEnable() {
+            this._rig = this.owner.getComponent(Laya.RigidBody);
+        }
+        steSpeedDir(dir = 0) {
+            this.moveDir = dir;
+            if (dir == 1)
+                this._rig.setVelocity({ x: -this.rSpeed, y: 0 });
+            else if (dir == 2)
+                this._rig.setVelocity({ x: this.rSpeed, y: 0 });
+            else if (dir == 0)
+                this._rig.setVelocity({ x: 0, y: 0 });
+        }
+        onTriggerEnter(other, self, contact) {
+        }
+        onUpdate() {
+            let stageW = Laya.stage.width;
+            let stageH = Laya.stage.height;
+            let thatNode = this.owner;
+            if (this.moveDir == 1 && thatNode.x <= 0)
+                return this._rig.setVelocity({ x: 0, y: 0 });
+            if (this.moveDir == 2 && thatNode.x >= stageW - thatNode.width)
+                return this._rig.setVelocity({ x: 0, y: 0 });
+        }
+        onDisable() {
+            Laya.Pool.recover("monster", this.owner);
+        }
+    }
+
+    class GameView extends Laya.Script {
+        constructor() {
+            super();
+            this.creBulletTime1 = 8;
+            this.creBulletTime2 = 0;
+            this.moveBgTime1 = 2;
+            this.moveBgTime2 = 0;
+        }
+        onEnable() {
+            Laya.MouseManager.multiTouchEnabled = false;
+            this.leftBtn.on(Laya.Event.MOUSE_DOWN, this, this.touchLeftStart);
+            this.leftBtn.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+            this.rightBtn.on(Laya.Event.MOUSE_DOWN, this, this.touchRightStart);
+            this.rightBtn.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+            this.initView();
+        }
+        initView() {
+            let bgH = this.imgbg.height;
+            let stageW = Laya.stage.width;
+            let stageH = Laya.stage.height;
+            this.imgbg.y = -(bgH - stageH);
+            this.roleNode = this.rolePrefab.create();
+            this.roleSpr.addChild(this.roleNode);
+            this.roleNode.pos((stageW / 2) - (this.roleNode.width / 2), stageH - this.roleNode.height - 200);
+        }
+        buldBullet() {
+            let flyer = Laya.Pool.getItemByCreateFun("bullet", this.bulletPrefab.create, this.bulletPrefab);
+            let crex = (this.roleNode.x) + (this.roleNode.width / 2) - (flyer.width / 2);
+            let crey = this.roleNode.y;
+            flyer.pos(crex, crey);
+            this.roleSpr.addChild(flyer);
+        }
+        touchLeftStart() {
+            let com = this.roleNode.getComponent(RolePrefab);
+            com.steSpeedDir(1);
+        }
+        touchRightStart() {
+            let com = this.roleNode.getComponent(RolePrefab);
+            com.steSpeedDir(2);
+        }
+        touchEnd() {
+            let com = this.roleNode.getComponent(RolePrefab);
+            com.steSpeedDir(0);
+        }
+        moveBg() {
+            this.imgbg.y += 2;
+        }
+        onUpdate() {
+            this.creBulletTime2 += 1;
+            if (this.creBulletTime2 > this.creBulletTime1) {
+                this.creBulletTime2 = 0;
+                this.buldBullet();
+            }
+            this.moveBgTime2 += 1;
+            if (this.moveBgTime2 > this.moveBgTime1) {
+                this.moveBgTime2 = 0;
+                this.moveBg();
+            }
+        }
+        onDisable() {
+        }
+    }
+
+    class Index extends Laya.Script {
+        constructor() { super(); }
+        onEnable() {
+            this.btnStart.on(Laya.Event.CLICK, this, () => {
+                Laya.Scene.open("GameView.scene");
+            });
+        }
+        onDisable() {
+        }
+    }
+
     var View = Laya.View;
     var REG = Laya.ClassUtils.regClass;
     var ui;
@@ -67,32 +175,6 @@
             REG("ui.physicsDemo.PhysicsGameMainUI", PhysicsGameMainUI);
         })(physicsDemo = ui.physicsDemo || (ui.physicsDemo = {}));
     })(ui || (ui = {}));
-
-    class GameView extends ui.GameViewUI {
-        constructor() {
-            super();
-        }
-        onEnable() {
-            this.initView();
-        }
-        onStart() {
-        }
-        initView() {
-        }
-        onDisable() {
-        }
-    }
-
-    class Index extends Laya.Script {
-        constructor() { super(); }
-        onEnable() {
-            this.btnStart.on(Laya.Event.CLICK, this, () => {
-                Laya.Scene.open("GameView.scene");
-            });
-        }
-        onDisable() {
-        }
-    }
 
     class LoadingRT extends ui.LoadingUI {
         onAwake() {
@@ -248,14 +330,19 @@
     }
 
     class BulletPrefab extends Laya.Script {
-        constructor() { super(); }
+        constructor() {
+            super();
+            this.bSpeed = 20;
+            this.bHarm = 1;
+        }
         onEnable() {
             var rig = this.owner.getComponent(Laya.RigidBody);
-            rig.setVelocity({ x: 0, y: -10 });
+            rig.setVelocity({ x: 0, y: -this.bSpeed });
         }
         onTriggerEnter(other, self, contact) {
+            if (other.label == "role")
+                return;
             this.owner.removeSelf();
-            console.log("子弹", other, self, contact);
         }
         onUpdate() {
             if (this.owner.y < -10) {
@@ -390,21 +477,6 @@
             this.roleDirection = "";
         }
         onDisable() {
-        }
-    }
-
-    class RolePrefab extends Laya.Script {
-        constructor() { super(); }
-        onEnable() {
-        }
-        onTriggerEnter(other, self, contact) {
-            this.owner.removeSelf();
-            console.log("怪物", other, self, contact);
-        }
-        onUpdate() {
-        }
-        onDisable() {
-            Laya.Pool.recover("monster", this.owner);
         }
     }
 

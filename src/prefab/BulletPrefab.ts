@@ -2,18 +2,25 @@
  * 子弹脚本，实现子弹飞行逻辑及对象池回收机制
  */
 export default class BulletPrefab extends Laya.Script {
-    constructor() { super(); }
+    /** 子弹速度 */
+    private bSpeed: number = 20;
+    /** 子弹伤害 */
+    private bHarm: number = 1;
+
+    constructor() { 
+        super(); 
+    }
 
     onEnable(): void {
         //设置初始速度
         var rig: Laya.RigidBody = this.owner.getComponent(Laya.RigidBody);
-        rig.setVelocity({ x: 0, y: -10 });
+        rig.setVelocity({ x: 0, y: -this.bSpeed });
     }
 
     onTriggerEnter(other: any, self: any, contact: any): void {
-        //如果被碰到，则移除子弹
+        // console.log("子弹", other, self, contact);
+        if (other.label == "role") return;
         this.owner.removeSelf();
-        console.log("子弹", other, self, contact);
     }
 
     onUpdate(): void {

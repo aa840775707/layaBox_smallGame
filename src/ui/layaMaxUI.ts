@@ -31,7 +31,9 @@ export module ui.ani {
 }
 export module ui {
     export class GameViewUI extends View {
-		public roleNode:Laya.Sprite;
+		public imgbg:Laya.Image;
+		public leftBtn:Laya.Button;
+		public rightBtn:Laya.Button;
         constructor(){ super()}
         createChildren():void {
             super.createChildren();

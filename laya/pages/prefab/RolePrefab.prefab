@@ -2,11 +2,11 @@
     "x":0,
     "type":"Sprite",
     "selectedBox":8,
-    "selecteID":10,
+    "selecteID":9,
     "searchKey":"Sprite",
-    "props":{"y":0,"x":0,"presetID":1,"preset":"laya/pages/prefab/RolePrefab.prefab","isPresetRoot":true},
+    "props":{"y":0,"x":0,"width":225,"presetID":1,"preset":"laya/pages/prefab/RolePrefab.prefab","isPresetRoot":true,"height":238},
     "nodeParent":-1,
-    "maxID":13,
+    "maxID":14,
     "label":"Sprite(RolePrefab)",
     "isOpen":true,
     "isDirectory":true,
@@ -34,7 +34,7 @@
             "switchAble":true,
             "searchKey":"CircleCollider",
             "removeAble":true,
-            "props":{"y":10,"x":5,"radius":110,"presetID":3,"preset":"laya/pages/prefab/RolePrefab.prefab","label":"role","isSensor":true},
+            "props":{"y":6.5,"x":0,"radius":112.5,"presetID":3,"preset":"laya/pages/prefab/RolePrefab.prefab","label":"role","isSensor":true},
             "nodeParent":8,
             "label":"CircleCollider(RolePrefab)",
             "isDirectory":false,
@@ -42,7 +42,8 @@
             "hasChild":false,
             "compId":10,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
         },
         {
             "x":15,
@@ -50,7 +51,7 @@
             "switchAble":true,
             "searchKey":"RigidBody",
             "removeAble":true,
-            "props":{"presetID":4,"preset":"laya/pages/prefab/RolePrefab.prefab","label":"role","group":-2},
+            "props":{"presetID":4,"preset":"laya/pages/prefab/RolePrefab.prefab","label":"role","group":-1,"gravityScale":0},
             "nodeParent":8,
             "label":"RigidBody(RolePrefab)",
             "isDirectory":false,
