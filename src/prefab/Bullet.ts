@@ -1,6 +1,4 @@
-/**
- * 子弹脚本，实现子弹飞行逻辑及对象池回收机制
- */
+/** 子弹 */
 export default class Bullet extends Laya.Script {
     constructor() { super(); }
 

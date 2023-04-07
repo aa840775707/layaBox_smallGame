@@ -1,26 +1,36 @@
-/**
- * 子弹脚本，实现子弹飞行逻辑及对象池回收机制
- */
+/** 怪物 */
 export default class MonsterPrefab extends Laya.Script {
-    constructor() { super(); }
+    /** @prop {name:labNum, type:Node} 道具预制 */
+    private labNum: Laya.Label;
+
+    /**刚体对象引用 */
+    private _rig: Laya.RigidBody
+    private mid: number = 1;
+    private mDefense: number = 1;
+
+    constructor() {
+        super();
+    }
 
     onEnable(): void {
-        //设置初始速度
-        // var rig: Laya.RigidBody = this.owner.getComponent(Laya.RigidBody);
-        // rig.setVelocity({ x: 0, y: -10 });
+        let rig = this.owner.getComponent(Laya.RigidBody);
+        rig.setVelocity({ x: 0, y: 2 });
+    }
+
+    /** 设置怪物防御 */
+    public setMonsterDefense(mid: number = 0, num: number = 0): void {
+        this.mid = mid;
+        this.mDefense = mid;
+        this.labNum.text = this.mid.toString();
     }
 
     onTriggerEnter(other: any, self: any, contact: any): void {
-        //如果被碰到，则移除子弹
-        this.owner.removeSelf();
         console.log("怪物", other, self, contact);
+
     }
 
     onUpdate(): void {
-        // //如果子弹超出屏幕，则移除子弹
-        // if ((this.owner as Laya.Sprite).y < -10) {
-        //     this.owner.removeSelf();
-        // }
+
     }
 
     onDisable(): void {

@@ -23,7 +23,7 @@ export default class LoadingRT extends ui.LoadingUI {
             "res/atlas/mainUi.atlas",
 
             //单独加载大图
-            "bigPicture/bg_daohang_paodao.jpg",
+            "bigPicture/bg_daohang_paodao.png",
             "bigPicture/bg_daohang_xiaoyouxi.jpg",
         ];
 
