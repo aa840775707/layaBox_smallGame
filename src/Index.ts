@@ -1,20 +1,36 @@
+import Common from "./script/Common";
+
 export default class Index extends Laya.Script {
-    //通过IDE组件属性的方式，将按钮节点绑定到组件的类成员属性上，方便直接使用对应的节点对象
-    /** @prop {name:btnStart, type:Node} */
-    private btnStart: Laya.Button;
+    /** @prop {name:btnList, type:Node} */
+    private btnList: Laya.List;
 
     constructor() { super(); }
 
     onEnable(): void {
-        //侦听ui按钮点击事件
-        this.btnStart.on(Laya.Event.CLICK, this, () => {
-            //点击后，打开UI场景示例
-            // Laya.Scene.open("uiDemo/UiMain.scene");
+        this.btnList.renderHandler = new Laya.Handler(this, this.listHandle);
+        let arr = [];
+        let maps = Common.getConfigByName("Map");
+        for (const key in maps) {
+            if (Object.prototype.hasOwnProperty.call(maps, key)) {
+                const element = maps[key];
+                arr.push(element); 
+            }
+        }
+        this.btnList.array = arr;
+    }
+
+    private listHandle(cell: Laya.Box, index: number) {
+        let itemData = cell.dataSource;
+        let btnStart = cell.getChildByName("btnStart") as Laya.Button;
+        btnStart.label = `第${index + 1}关`;
+        btnStart.offAll(Laya.Event.CLICK);
+        btnStart.on(Laya.Event.CLICK, this, ()=>{
             Laya.Scene.open("GameView.scene");
         });
     }
 
+
     onDisable(): void {
-        
+
     }
 }

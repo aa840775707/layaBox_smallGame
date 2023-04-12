@@ -42,8 +42,18 @@ export default class LoadingRT extends ui.LoadingUI {
             "d3/trail/Cube.lh"
         ];
 
-        //加载3D
-        Laya.loader.create(resArr3d, Laya.Handler.create(this, this.onLoaded), Laya.Handler.create(this, this.onLoading));
+        Laya.loader.create(resArr3d, Laya.Handler.create(this, this.loadConfig));
+    }
+
+    /**加载配置表文件 */
+    loadConfig():void{
+        let resArrJson: Array<string> = [
+            "json/Bullet.json",
+            "json/Event.json",
+            "json/Map.json",
+            "json/Monster.json"
+        ];
+        Laya.loader.create(resArrJson, Laya.Handler.create(this, this.onLoaded), Laya.Handler.create(this, this.onLoading));
     }
 
     /**

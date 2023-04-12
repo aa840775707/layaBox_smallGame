@@ -1,0 +1,23 @@
+{
+    "1": {
+        "bossName": "boss1",
+        "bossIcon": "icon/item/36009.png",
+        "bBackgroundStyle": "effect/ui/xinfaqiu1/skeleton",
+        "bBackgroundColor": "red",
+        "bDescription": "急急急急急急"
+    },
+    "2": {
+        "bossName": "boss2",
+        "bossIcon": "icon/item/36009.png",
+        "bBackgroundStyle": "effect/ui/xinfaqiu1/skeleton",
+        "bBackgroundColor": "red",
+        "bDescription": "急急急急急急"
+    },
+    "3": {
+        "bossName": "boss3",
+        "bossIcon": "icon/item/36009.png",
+        "bBackgroundStyle": "effect/ui/xinfaqiu1/skeleton",
+        "bBackgroundColor": "red",
+        "bDescription": "急急急急急急"
+    }
+}

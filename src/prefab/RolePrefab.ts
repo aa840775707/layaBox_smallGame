@@ -1,3 +1,6 @@
+import Const from "../script/Const";
+import MonsterPrefab from "./MonsterPrefab";
+
 export default class RolePrefab extends Laya.Script {
     /** 刚体对象引用 */
     private _rig: Laya.RigidBody
@@ -14,16 +17,24 @@ export default class RolePrefab extends Laya.Script {
         this._rig = this.owner.getComponent(Laya.RigidBody);
     }
 
+    onTriggerEnter(other: any, self: any, contact: any): void {
+        if (other.label == "monster") {
+            let otherCom = other.owner.getComponent(MonsterPrefab) as MonsterPrefab;
+            this.roleDie();
+        }
+    }
+
+    /** 角色死亡 */
+    private roleDie(): void {
+        Laya.stage.event(Const.EVEN_GAMEOVER);
+    }
+
     /** 设置速度方向 */
-    steSpeedDir(dir: number = 0): void {
+    public steSpeedDir(dir: number = 0): void {
         this.moveDir = dir;
         if (dir == 1) this._rig.setVelocity({ x: -this.rSpeed, y: 0 });
         else if (dir == 2) this._rig.setVelocity({ x: this.rSpeed, y: 0 });
         else if (dir == 0) this._rig.setVelocity({ x: 0, y: 0 });
-    }
-
-    onTriggerEnter(other: any, self: any, contact: any): void {
-        // console.log("角色", other, self, contact);
     }
 
     onUpdate(): void {
@@ -35,6 +46,6 @@ export default class RolePrefab extends Laya.Script {
     }
 
     onDisable(): void {
-       
+
     }
 }

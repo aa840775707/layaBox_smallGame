@@ -2,13 +2,10 @@
 import GameView from "./GameView"
 import Index from "./Index"
 import LoadingRT from "./LoadingRT"
-import PhysicsGameMainRT from "./scence/physicsDemo/PhysicsGameMainRT"
-import PhysicsGameMain from "./scence/physicsDemo/PhysicsGameMain"
-import Bullet from "./prefab/Bullet"
+import LoseView from "./views/LoseView"
+import VictoryView from "./views/VictoryView"
 import BulletPrefab from "./prefab/BulletPrefab"
-import DropBox from "./prefab/DropBox"
 import MonsterPrefab from "./prefab/MonsterPrefab"
-import Role from "./prefab/Role"
 import RolePrefab from "./prefab/RolePrefab"
 /*
 * 游戏初始化配置;
@@ -32,13 +29,10 @@ export default class GameConfig{
         reg("GameView.ts",GameView);
         reg("Index.ts",Index);
         reg("LoadingRT.ts",LoadingRT);
-        reg("scence/physicsDemo/PhysicsGameMainRT.ts",PhysicsGameMainRT);
-        reg("scence/physicsDemo/PhysicsGameMain.ts",PhysicsGameMain);
-        reg("prefab/Bullet.ts",Bullet);
+        reg("views/LoseView.ts",LoseView);
+        reg("views/VictoryView.ts",VictoryView);
         reg("prefab/BulletPrefab.ts",BulletPrefab);
-        reg("prefab/DropBox.ts",DropBox);
         reg("prefab/MonsterPrefab.ts",MonsterPrefab);
-        reg("prefab/Role.ts",Role);
         reg("prefab/RolePrefab.ts",RolePrefab);
     }
 }

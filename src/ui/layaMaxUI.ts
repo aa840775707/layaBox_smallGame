@@ -3,32 +3,6 @@ import View=Laya.View;
 import Dialog=Laya.Dialog;
 import Scene=Laya.Scene;
 var REG: Function = Laya.ClassUtils.regClass;
-export module ui.ani {
-    export class saceToNormalUI extends Laya.EffectAnimation {
-		public ani1:Laya.FrameAnimation;
-        public static  uiView:any ={"type":"View","props":{},"compId":2,"child":[{"type":"Sprite","props":{"y":0,"x":0,"texture":"comp/x.png"},"compId":3}],"animations":[{"nodes":[{"target":3,"keyframes":{"scaleY":[{"value":0.8,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":0},{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":5}],"scaleX":[{"value":0.8,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":0},{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":5}]}}],"name":"ani1","id":1,"frameRate":24,"action":0}],"loadList":["comp/x.png"],"loadList3D":[]};
-        constructor(){ super();this.effectData =saceToNormalUI.uiView;}
-    }
-    REG("ui.ani.saceToNormalUI",saceToNormalUI);
-    export class scaleUI extends Laya.EffectAnimation {
-		public ani1:Laya.FrameAnimation;
-        public static  uiView:any ={"type":"View","props":{},"compId":2,"child":[{"type":"Button","props":{"y":0,"x":0,"skin":"comp/button.png","label":"label","labelSize":28,"labelFont":"SimHei","labelColors":"#fff,#fff,#e7ce4e","sizeGrid":"14,16,15,19","width":160,"labelPadding":"0,0,1,0"},"compId":3}],"animations":[{"nodes":[{"target":3,"keyframes":{"scaleY":[{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":0},{"value":1.2,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":12},{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":24}],"scaleX":[{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":0},{"value":1.2,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":12},{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":24}]}}],"name":"ani1","id":1,"frameRate":60,"action":0}],"loadList":["comp/button.png"],"loadList3D":[]};
-        constructor(){ super();this.effectData =scaleUI.uiView;}
-    }
-    REG("ui.ani.scaleUI",scaleUI);
-    export class scaleToBigUI extends Laya.EffectAnimation {
-		public ani1:Laya.FrameAnimation;
-        public static  uiView:any ={"type":"View","props":{},"compId":2,"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"comp/img_blank.png"},"compId":3}],"animations":[{"nodes":[{"target":3,"keyframes":{"scaleY":[{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":0},{"value":1.2,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleY","index":6}],"scaleX":[{"value":1,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":0},{"value":1.2,"tweenMethod":"linearNone","tween":true,"target":3,"key":"scaleX","index":6}]}}],"name":"ani1","id":1,"frameRate":24,"action":0}],"loadList":["comp/img_blank.png"],"loadList3D":[]};
-        constructor(){ super();this.effectData =scaleToBigUI.uiView;}
-    }
-    REG("ui.ani.scaleToBigUI",scaleToBigUI);
-    export class scaleToSmallUI extends Laya.EffectAnimation {
-		public ani1:Laya.FrameAnimation;
-        public static  uiView:any ={"type":"View","props":{},"compId":2,"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"comp/img_hd.png"},"compId":4}],"animations":[{"nodes":[{"target":4,"keyframes":{"scaleY":[{"value":1,"tweenMethod":"linearNone","tween":true,"target":4,"key":"scaleY","index":0},{"value":0.8,"tweenMethod":"linearNone","tween":true,"target":4,"key":"scaleY","index":6}],"scaleX":[{"value":1,"tweenMethod":"linearNone","tween":true,"target":4,"key":"scaleX","index":0},{"value":0.8,"tweenMethod":"linearNone","tween":true,"target":4,"key":"scaleX","index":6}]}}],"name":"ani1","id":1,"frameRate":24,"action":0}],"loadList":["comp/img_hd.png"],"loadList3D":[]};
-        constructor(){ super();this.effectData =scaleToSmallUI.uiView;}
-    }
-    REG("ui.ani.scaleToSmallUI",scaleToSmallUI);
-}
 export module ui {
     export class GameViewUI extends View {
 		public rightBtn:Laya.Button;
@@ -50,16 +24,4 @@ export module ui {
         }
     }
     REG("ui.LoadingUI",LoadingUI);
-}
-export module ui.physicsDemo {
-    export class PhysicsGameMainUI extends View {
-		public scoreLbl:Laya.Label;
-		public tipLbll:Laya.Label;
-        constructor(){ super()}
-        createChildren():void {
-            super.createChildren();
-            this.loadScene("physicsDemo/PhysicsGameMain");
-        }
-    }
-    REG("ui.physicsDemo.PhysicsGameMainUI",PhysicsGameMainUI);
 }

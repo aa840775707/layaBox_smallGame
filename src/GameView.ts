@@ -1,5 +1,6 @@
 import MonsterPrefab from "./prefab/MonsterPrefab";
 import RolePrefab from "./prefab/RolePrefab";
+import Const from "./script/Const";
 import { ui } from "./ui/layaMaxUI";
 
 export default class GameView extends Laya.Script {
@@ -12,8 +13,10 @@ export default class GameView extends Laya.Script {
     /** @prop {name:propPrefab, type:Prefab} 道具预制 */
     private propPrefab: Laya.Prefab;
 
-    /** @prop {name:sprBg, type:Node} 移动底板 */
-    private sprBg: Laya.Sprite;
+    /** @prop {name:sprBg1, type:Node} 背景1 */
+    private sprBg1: Laya.Sprite;
+    /** @prop {name:sprBg2, type:Node} 背景2 */
+    private sprBg2: Laya.Sprite;
     /** @prop {name:leftBtn, type:Node} 左按钮 */
     private leftBtn: Laya.Button;
     /** @prop {name:rightBtn, type:Node} 右按钮 */
@@ -28,25 +31,17 @@ export default class GameView extends Laya.Script {
     /** 类型1怪物2道具，位置 */
     private posArr: { mid: number, type: number, pos: Laya.Point, data: any }[];
 
-    /**生成子弹速度 */
-    private creBulletTime1 = 8;
-    private creBulletTime2 = 0;
-    /**背景移动速度 */
-    private moveBgTime1 = 2;
-    private moveBgTime2 = 0;
-
     constructor() {
         super();
-    }
+    };
 
     onEnable(): void {
         Laya.MouseManager.multiTouchEnabled = false; //多点触控关闭
+        Laya.stage.on(Const.EVEN_GAMEOVER, this, this.gameOver);
         this.leftBtn.on(Laya.Event.MOUSE_DOWN, this, this.touchLeftStart);
         this.leftBtn.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
         this.rightBtn.on(Laya.Event.MOUSE_DOWN, this, this.touchRightStart);
         this.rightBtn.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
-        this.buildRole();
-
         this.posArr = [
             { mid: 1, type: 1, pos: new Laya.Point(96, 3993), data: 10 },
             { mid: 2, type: 1, pos: new Laya.Point(520, 3524), data: 20 },
@@ -56,35 +51,42 @@ export default class GameView extends Laya.Script {
             { mid: 6, type: 1, pos: new Laya.Point(533, 1429), data: 60 },
             { mid: 7, type: 1, pos: new Laya.Point(83, 1005), data: 70 },
             { mid: 8, type: 1, pos: new Laya.Point(520, 496), data: 80 },
-            { mid: 9, type: 1, pos: new Laya.Point(37, 16), data: 90 },
+            { mid: 9, type: 1, pos: new Laya.Point(280, 16), data: 90 },
         ];
         this.msterSpr.removeChildren();
         this.posArr.forEach(element => {
-            if (element.type == 1) this.buildMonster(element.mid, element.pos);
+            if (element.type == 1) this.buildMonster(element);
             else this.buildProp(element.mid, element.pos);
         });
-        this.moveBg()
-    }
+        // 背景
+        let stageH = Laya.stage.height;
+        this.sprBg1.y = stageH - this.sprBg1.height;
+        this.sprBg2.y = this.sprBg1.y - this.sprBg2.height;
+        Laya.timer.frameLoop(1, this, this.moveBg);
+        // 子弹
+        Laya.timer.frameLoop(10, this, this.buildBullet);
+        // 角色
+        this.buildRole();
+    };
 
     /** 生成主角 */
     private buildRole(): void {
-        let bgH = this.sprBg.height;
         let stageW = Laya.stage.width;
         let stageH = Laya.stage.height;
-        this.sprBg.y = -(bgH - stageH);
         this.roleNode = this.rolePrefab.create();
         this.roleSpr.addChild(this.roleNode);
         this.roleNode.pos((stageW / 2) - (this.roleNode.width / 2), stageH - this.roleNode.height - 200);
-    }
+    };
 
     /** 生成怪物 */
-    private buildMonster(mid: number, pos: Laya.Point): void {
+    private buildMonster(data): void {
         let monster: Laya.Sprite = Laya.Pool.getItemByCreateFun("monster", this.monsterPrefab.create, this.monsterPrefab);
         let monsterComt: MonsterPrefab = monster.getComponent(MonsterPrefab);
-        monster.pos(pos.x, pos.y);
-        monsterComt.setMonsterDefense(mid);
+        monster.pos(data.pos.x, data.pos.y);
+        monsterComt.setMonsterID(data.mid);
+        monsterComt.setMonsterBlood(data.data);
         this.msterSpr.addChild(monster);
-    }
+    };
 
     /** 生成道具 */
     private buildProp(mid: number, pos: Laya.Point): void {
@@ -92,7 +94,7 @@ export default class GameView extends Laya.Script {
         let propComt: MonsterPrefab = prop.getComponent(MonsterPrefab);
         prop.pos(pos.x, pos.y);
         this.msterSpr.addChild(prop);
-    }
+    };
 
     /** 子弹生成 */
     private buildBullet(): void {
@@ -101,44 +103,44 @@ export default class GameView extends Laya.Script {
         let crey = this.roleNode.y;
         flyer.pos(crex, crey);
         this.roleSpr.addChild(flyer);
-    }
+    };
 
     /** 左按钮点击开始 */
     private touchLeftStart(): void {
         let com: RolePrefab = this.roleNode.getComponent(RolePrefab);
         com.steSpeedDir(1);
-    }
+    };
 
     /** 右按钮点击开始 */
     private touchRightStart(): void {
         let com: RolePrefab = this.roleNode.getComponent(RolePrefab);
         com.steSpeedDir(2);
-    }
+    };
 
     /** 点击结束 */
     private touchEnd() {
         let com: RolePrefab = this.roleNode.getComponent(RolePrefab);
         com.steSpeedDir(0);
-    }
+    };
 
     /** 背景移动 */
     private moveBg() {
-        this.sprBg.y += 2;
-    }
+        let stageW = Laya.stage.width;
+        let stageH = Laya.stage.height;
+        if (this.sprBg1.y >= stageH) this.sprBg1.y = this.sprBg2.y - this.sprBg1.height;
+        if (this.sprBg2.y >= stageH) this.sprBg2.y = this.sprBg1.y - this.sprBg2.height;
+        this.sprBg1.y += 10;
+        this.sprBg2.y += 10;
+    };
+
+    /** 游戏结束 */
+    private gameOver(): void {
+        Laya.timer.clearAll(this);
+        Laya.Scene.open("views/LoseView.scene");
+    };
 
     onUpdate(): void {
-        // 子弹
-        this.creBulletTime2 += 1;
-        if (this.creBulletTime2 > this.creBulletTime1) {
-            this.creBulletTime2 = 0;
-            this.buildBullet();
-        }
-        // 背景
-        this.moveBgTime2 += 1;
-        if (this.moveBgTime2 > this.moveBgTime1) {
-            this.moveBgTime2 = 0;
-            this.moveBg();
-        }
+
     }
 
     onDisable(): void {
